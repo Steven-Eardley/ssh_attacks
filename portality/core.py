@@ -25,13 +25,13 @@ def initialise_index(app):
     mappings = app.config["MAPPINGS"]
     i = str(app.config['ELASTIC_SEARCH_HOST']).rstrip('/')
     i += '/' + app.config['ELASTIC_SEARCH_DB']
-    for key, mapping in mappings.iteritems():
+    for key, mapping in mappings.items():
         im = i + '/' + key + '/_mapping'
         exists = requests.get(im)
         if exists.status_code != 200:
             ri = requests.post(i)
             r = requests.put(im, json.dumps(mapping))
-            print key, r.status_code
+            print(key, r.status_code)
 
 def setup_error_email(app):
     ADMINS = app.config.get('ADMINS', '')

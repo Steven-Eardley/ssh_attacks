@@ -20,8 +20,8 @@ if len(app.config.get('SUPER_USER',[])) > 0:
         su = models.Account(id=firstsu)
         su.set_password(firstsu)
         su.save()
-        print 'superuser account named - ' + firstsu + ' created.'
-        print 'default password matches username. Change it.'
+        print('superuser account named - ' + firstsu + ' created.')
+        print('default password matches username. Change it.')
 
 
 @blueprint.route('/')

@@ -2,8 +2,7 @@
 # this runs a github web hook endpoint
 # see https://help.github.com/articles/post-receive-hooks
 
-import os
-from flask import Blueprint
+from flask import Blueprint, request
 from git import *
 from subprocess import call
 

@@ -1,19 +1,21 @@
-from urllib import urlopen, urlencode
-import md5
+from urllib.request import urlopen
+from urllib.parse import urlencode
+import hashlib
 import os, re
 from unicodedata import normalize
 from functools import wraps
 from flask import request, current_app
 
-from urlparse import urlparse, urljoin
+from urllib.parse import urlparse, urljoin
 
 import smtplib
-from email.MIMEMultipart import MIMEMultipart
-from email.MIMEBase import MIMEBase
-from email.MIMEText import MIMEText
-from email.Utils import COMMASPACE, formatdate
-from email import Encoders
-         
+from email.mime.multipart import MIMEMultipart
+from email.mime.base import MIMEBase
+from email.mime.text import MIMEText
+from email.utils import COMMASPACE, formatdate
+import email.encoders as encoders
+
+         #TODO: add email as dependency
 
 def is_safe_url(target):
     ref_url = urlparse(request.host_url)
@@ -39,7 +41,7 @@ def send_mail(to, fro, subject, text, files=[],server="localhost"):
     for file in files:
         part = MIMEBase('application', "octet-stream")
         part.set_payload( open(file,"rb").read() )
-        Encoders.encode_base64(part)
+        encoders.encode_base64(part)
         part.add_header('Content-Disposition', 'attachment; filename="%s"'
                        % os.path.basename(file))
         msg.attach(part)
@@ -90,7 +92,7 @@ def slugify(text, delim=u'_'):
 # get gravatar for email address
 def get_gravatar(email, size=None, default=None, border=None):
     email = email.lower().strip()
-    hash = md5.md5(email).hexdigest()
+    hash = hashlib.md5(email).hexdigest()
     args = {'gravatar_id':hash}
     if size and 1 <= int(size) <= 512:
         args['size'] = size

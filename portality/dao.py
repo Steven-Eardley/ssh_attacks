@@ -1,4 +1,5 @@
-import os, json, UserDict, requests, uuid
+import os, json, requests, uuid
+from collections import UserDict
 
 from datetime import datetime
 
@@ -10,7 +11,7 @@ You can overwrite and add to the DomainObject functions as required. See models.
 '''
     
     
-class DomainObject(UserDict.IterableUserDict):
+class DomainObject(UserDict):
     __type__ = None # set the type on the model that inherits this
 
     def __init__(self, **kwargs):

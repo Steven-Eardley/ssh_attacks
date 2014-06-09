@@ -3,7 +3,7 @@ This endpoint takes elasticsearch queries and returns the result object along wi
 "nodes" list and "links" list for use in force-directed network graphs
 '''
 
-import json, urllib2, requests
+import json, requests
 
 from flask import Blueprint, request, make_response
 

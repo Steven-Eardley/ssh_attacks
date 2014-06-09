@@ -130,9 +130,9 @@ def manage():
             if k.startswith('id_'):
                 kid = k.replace('id_','')
                 rec = models.Pages.pull(kid)
-                print kid
+                print(kid)
                 if rec is not None:
-                    print rec.data
+                    print(rec.data)
                     if request.values['submit'] == 'Delete selected' and request.values.get('selected_' + kid,False):
                         _sync_delete(rec)
                         updatecount += 1

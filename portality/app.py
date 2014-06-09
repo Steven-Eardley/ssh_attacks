@@ -25,20 +25,20 @@ from portality.view.package import blueprint as package
 from portality.view.forms import blueprint as forms
 from portality.view.pagemanager import blueprint as pagemanager
 # from portality.view.feed import blueprint as feed  # requires lxml - uncomment if you have it installed
-from portality.view.hooks import blueprint as hooks
+# from portality.view.hooks import blueprint as hooks
 
 
-#app.register_blueprint(account, url_prefix='/account')
+app.register_blueprint(account, url_prefix='/account')
 app.register_blueprint(nav, url_prefix='/nav')
 #app.register_blueprint(media, url_prefix='/media')
-#app.register_blueprint(admin, url_prefix='/admin')
+app.register_blueprint(admin, url_prefix='/admin')
 app.register_blueprint(graph, url_prefix='/graph')
 app.register_blueprint(contact, url_prefix='/contact')
 app.register_blueprint(query, url_prefix='/query')
 #app.register_blueprint(stream, url_prefix='/stream')
 app.register_blueprint(package, url_prefix='/package')
 app.register_blueprint(forms, url_prefix='/forms')
-app.register_blueprint(hooks, url_prefix='/hooks')
+#app.register_blueprint(hooks, url_prefix='/hooks')
 # app.register_blueprint(feed)  # requires lxml - uncomment if you have it installed
 app.register_blueprint(pagemanager)
 
