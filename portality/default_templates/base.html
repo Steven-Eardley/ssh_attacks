@@ -1,0 +1,126 @@
+{% include 'head.html' %}
+
+<body data-spy="scroll" data-target=".subnav" data-offset="50">
+
+    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+          <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="/">{{ app.config['SERVICE_NAME'] }}</a>
+          </div>
+          <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+              <li class="active"><a href="">page 1</a></li>
+              <li><a href="">page 2</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li>
+                <!--
+                <form class="navbar-form" role="search" id="topsearch" name="topsearch" action="/search" method="GET">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search" name="q">
+                    </div>
+                    <button type="submit" class="btn btn-default">Submit</button>
+                </form>
+                -->
+                <form class="navbar-form navbar-right" role="search">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search" name="srch-term" id="srch-term">
+                        <div class="input-group-btn">
+                            <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                        </div>
+                    </div>
+                </form>
+              </li>
+              {% if current_user.is_anonymous() %}
+              <li>
+                <a href="{{url_for('account.register')}}">Register</a>
+              </li>
+              <li>
+                <a href="{{url_for('account.login')}}">Login</a>
+              </li>
+              {% else %}
+              <li>
+                <a alt="view your account" title="view your account" href="{{ url_for('account.index') }}{{current_user.id}}"><strong>{{current_user.id}}</strong></a>
+              </li>
+              <li>
+                <a href="{{ url_for('account.logout') }}">Logout</a>
+              </li>
+              {% endif %}
+            </ul>
+          </div>
+        </div>
+    </div>
+
+
+    <div class="container">
+
+    <div class="alert-messages">
+    {% with messages = get_flashed_messages(with_categories=True) %}
+    {%if messages %}
+      {% for category, message in messages %}
+        <div class="alert alert-{{category}} fade in" data-alert="alert">
+          <a class="close" data-dismiss="alert" href="#">&times;</a>
+          {{ message }}
+        </div>
+      {% endfor %}
+    {% endif %}
+    {% endwith %}
+    </div>
+
+    <div class="content">
+      {% block content %}{% endblock %}
+    </div> <!-- /content -->
+
+    <footer>
+    </footer>
+
+    </div> <!-- /container -->
+
+<!-- get all the scripts -->
+    <!-- get jquery js -->
+    <script type="text/javascript" src="/static/portality/vendor/jquery-1.10.2.min.js"></script>
+
+    <!-- get jquery-ui -->
+    <script type="text/javascript" src="/static/portality/vendor/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js"></script>
+
+    <!-- get bootstrap js -->
+    <script type="text/javascript" src="/static/portality/vendor/bootstrap-3.0.3/js/bootstrap.min.js"></script>
+
+    <!-- get tablesorter js -->
+    <script type="text/javascript" src="/static/portality/vendor/tablesorter/js/jquery.tablesorter.js"></script>
+
+    <!-- get select2 -->
+    <script type="text/javascript" src="/static/portality/vendor/select2-release-3.2/select2.min.js"></script>
+
+    <!-- get etherpad -->
+    <script src="/static/portality/vendor/etherpad.js"></script>
+
+    <!-- get parsley -->
+    <script type="text/javascript" src="/static/portality/vendor/parsley/parsley.js"></script>  
+
+    <!-- get graphview -->
+    <script type="text/javascript" src="/static/portality/vendor/graphview/jquery.graphview.js"></script>
+
+    <!-- get tinymce -->
+    <script type="text/javascript" src="/static/portality/vendor/tinymce/jscripts/tiny_mce/jquery.tinymce.js"></script>
+
+    <!-- get facetview -->
+    <script type="text/javascript" src="/static/portality/vendor/facetview/jquery.facetview.js"></script>
+
+    <!-- get d3 -->
+    <script type="text/javascript" src="/static/portality/vendor/d3/d3.min.js"></script>
+                
+    <!-- get linkify -->
+    <script type="text/javascript" src="/static/portality/vendor/facetview/vendor/linkify/1.0/jquery.linkify-1.0-min.js"></script>  
+
+    <!-- get our js and css -->
+    <script type="text/javascript" src="/static/portality/js/portality.js"></script>
+
+</body>
+</html>

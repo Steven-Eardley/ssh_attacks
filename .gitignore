@@ -42,3 +42,11 @@ coverage.xml
 
 # Sphinx documentation
 docs/_build/
+
+.*.swp
+src*
+
+app.cfg
+
+media/*
+portality/default_templates/pagemanager/content/*
