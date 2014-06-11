@@ -7,7 +7,7 @@ Build a form template, build a handler for its submission, receive data from end
 import json
 
 from flask import Blueprint, request, abort, make_response, render_template, flash, redirect, url_for
-from flask.ext.login import current_user
+from flask_login import current_user
 
 from portality.core import app
 

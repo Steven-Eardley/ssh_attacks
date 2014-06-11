@@ -8,7 +8,7 @@ import json
 
 from flask import Blueprint, request, url_for, flash, redirect, abort
 from flask import render_template, make_response
-from flask.ext.login import current_user
+from flask_login import current_user
 
 from portality.core import app
 import portality.util as util

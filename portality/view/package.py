@@ -7,7 +7,7 @@ exposing snapshots of browser-rendered pages.
 import os
 
 from flask import Blueprint, request, abort
-from flask.ext.login import current_user
+from flask_login import current_user
 
 from datetime import datetime
 

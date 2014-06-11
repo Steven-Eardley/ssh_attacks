@@ -8,7 +8,7 @@ new ones as required too.
 
 from flask import Flask, request, abort, render_template
 from flask.views import View
-from flask.ext.login import login_user, current_user
+from flask_login import login_user, current_user
 
 import portality.models as models
 from portality.core import app, login_manager

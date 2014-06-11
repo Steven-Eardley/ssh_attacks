@@ -14,8 +14,8 @@ When using portality in your own flask app, perhaps better to make your own mode
 
 # an example account object, which requires the further additional imports
 # There is a more complex example below that also requires these imports
-from werkzeug import generate_password_hash, check_password_hash
-from flask.ext.login import UserMixin
+from werkzeug.security import generate_password_hash, check_password_hash
+from flask_login import UserMixin
 
 class Account(DomainObject, UserMixin):
     __type__ = 'account'
@@ -38,6 +38,18 @@ class Account(DomainObject, UserMixin):
     def is_super(self):
         return not self.is_anonymous() and self.id in app.config['SUPER_USER']
     
+# Model for a ssh log entry
+# Jun  7 23:57:02 Zeus sshd[22455]: Invalid user admin from 61.174.51.219
+
+class SshEntry(DomainObject):
+    __type__ = 'ssh_entry'
+
+    def set_attack_time(self, time):
+        self.data['attack_time'] = time
+
+    def set_attack_name(self, name):
+        self.data['attack_name'] = name
+
 
 # a typical record object, with no special abilities
 class Record(DomainObject):

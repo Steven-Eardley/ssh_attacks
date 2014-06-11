@@ -2,7 +2,7 @@ import os, requests, json
 from flask import Flask
 
 from portality import settings
-from flask.ext.login import LoginManager, current_user
+from flask_login import LoginManager, current_user
 login_manager = LoginManager()
 
 def create_app():
@@ -10,7 +10,7 @@ def create_app():
     configure_app(app)
     if app.config['INITIALISE_INDEX']: initialise_index(app)
     setup_error_email(app)
-    login_manager.setup_app(app)
+    login_manager.init_app(app)
     return app
 
 def configure_app(app):

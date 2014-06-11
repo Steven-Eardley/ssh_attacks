@@ -5,7 +5,7 @@ import json, time, requests, markdown, os
 
 from flask import Blueprint, request, url_for, abort, make_response, flash
 from flask import render_template, redirect
-from flask.ext.login import current_user
+from flask_login import current_user
 
 import portality.util as util
 from portality.core import app

@@ -6,6 +6,7 @@ This endpoint takes elasticsearch queries and returns the result object along wi
 import json, requests
 
 from flask import Blueprint, request, make_response
+import urllib.parse
 
 from portality.core import app
 import portality.models as models
@@ -27,7 +28,7 @@ def everything():
     elif 'q' in request.values:
         qs = {'query': {'query_string': { 'query': request.values['q'] }}}
     elif 'source' in request.values:
-        qs = json.loads(urllib2.unquote(request.values['source']))
+        qs = json.loads(urllib.parse.unquote(request.values['source']))
     else: 
         qs = {'query':{'match_all':{}}}
 

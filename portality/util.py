@@ -107,3 +107,6 @@ def get_gravatar(email, size=None, default=None, border=None):
 
     return image
 
+def generate_password():
+    return "hunter2"
+

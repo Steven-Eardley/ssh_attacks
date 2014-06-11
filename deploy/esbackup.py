@@ -101,7 +101,7 @@ if deleteafter:
 
 # write to the log, if set
 if logto:
-    out.open(logto, 'a+')
+    out = open(logto, 'a+')
     out.write('' + json.dumps(done))
     out.close()
 
@@ -110,6 +110,6 @@ if mailto:
     pass
 
 # uncomment to print when done    
-print done
+print(done)
 
 
