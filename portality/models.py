@@ -44,11 +44,14 @@ class Account(DomainObject, UserMixin):
 class SshEntry(DomainObject):
     __type__ = 'ssh_entry'
 
-    def set_attack_time(self, time):
-        self.data['attack_time'] = time
+    def set_attack_time(self, thing):
+        self.data['attack_time'] = thing
 
     def set_attack_name(self, name):
         self.data['attack_name'] = name
+
+    def set_attack_ip(self, ip):
+        self.data['attack_ip'] = ip
 
 
 # a typical record object, with no special abilities
