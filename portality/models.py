@@ -11,7 +11,6 @@ Look in the dao.py to learn more about the default methods available to the Doma
 When using portality in your own flask app, perhaps better to make your own models file somewhere and copy these examples
 '''
 
-
 # an example account object, which requires the further additional imports
 # There is a more complex example below that also requires these imports
 from werkzeug.security import generate_password_hash, check_password_hash

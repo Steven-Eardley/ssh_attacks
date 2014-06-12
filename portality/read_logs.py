@@ -14,8 +14,11 @@ match_event_no = re.compile('[\d*]')
 # Count the total number of log lines inserted in the index.
 line_count = 0
 
-# Return configured hostname, or get the one from the current machine.
 def get_hostname():
+    """
+    Return configured hostname, or get the one from the current machine.
+    :return: The hostname, as a string.
+    """
     try:
         hostname = app.config['HOST_NAME']
     except KeyError:
@@ -24,13 +27,11 @@ def get_hostname():
 
     return hostname.strip()
 
-#TODO: handle archives (currently requires the logs to have been manually extracted.
+#TODO: handle archives (currently requires the logs to have been manually extracted).
 def read_logs():
     """
     Read all logs in the directory specified in AUTH_LOGS in app.cfg, or system default.
-    :return:
     """
-
     # Count number of files processed
     file_count = 0
 
@@ -55,6 +56,10 @@ def read_logs():
 
 #TODO: year isn't in logs so we set the current year, This may not always be true.
 def extract_model(log_entry):
+    """
+    Create a new Ssh_entry model for each log entry, and save them into the elasticsearch index
+    :param log_entry: a single line of the log file
+    """
     # Split on the machine's hostname to separate the time from the details
     hostname = get_hostname()
     [time, details] = log_entry.split(hostname)
