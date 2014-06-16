@@ -21,6 +21,7 @@ from portality.view.contact import blueprint as contact
 from portality.view.query import blueprint as query
 from portality.view.package import blueprint as package
 from portality.view.forms import blueprint as forms
+from portality.view.data import blueprint as data
 from portality.view.pagemanager import blueprint as pagemanager
 
 app.register_blueprint(account, url_prefix='/account')
@@ -31,6 +32,7 @@ app.register_blueprint(contact, url_prefix='/contact')
 app.register_blueprint(query, url_prefix='/query')
 app.register_blueprint(package, url_prefix='/package')
 app.register_blueprint(forms, url_prefix='/forms')
+app.register_blueprint(data, url_prefix='/data')
 app.register_blueprint(pagemanager)
 
 
@@ -72,4 +74,3 @@ def page_not_found(e):
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', debug=app.config['DEBUG'], port=app.config['PORT'])
-

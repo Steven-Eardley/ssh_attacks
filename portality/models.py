@@ -1,9 +1,8 @@
 
 from datetime import datetime
-
 from portality.core import app
-
 from portality.dao import DomainObject as DomainObject
+from flask_login import current_user
 
 '''
 Define models in here. They should all inherit from the DomainObject.
@@ -37,14 +36,12 @@ class Account(DomainObject, UserMixin):
     def is_super(self):
         return not self.is_anonymous() and self.id in app.config['SUPER_USER']
     
-# Model for a ssh log entry
-# Jun  7 23:57:02 Zeus sshd[22455]: Invalid user admin from 61.174.51.219
-
+# Model for an ssh log entry
 class SshEntry(DomainObject):
     __type__ = 'ssh_entry'
 
-    def set_attack_time(self, thing):
-        self.data['attack_time'] = thing
+    def set_attack_time(self, time):
+        self.data['attack_time'] = time
 
     def set_attack_name(self, name):
         self.data['attack_name'] = name
