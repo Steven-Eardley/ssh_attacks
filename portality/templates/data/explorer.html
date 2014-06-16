@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<link rel="stylesheet" href="/static/portality/vendor/facetview/vendor/bootstrap/css/bootstrap.css">
+<script type="text/javascript">
+jQuery(document).ready(function($) {
+  $('.facet-view-simple').each(function() {
+  $(this).facetview({
+    search_url: 'http://localhost:9200/ssh_attacks/ssh_entry/_search?',
+    search_index: 'elasticsearch',
+    datatype: 'json',
+    facets: [
+        {'field': 'attack_ip', 'display': 'IP'},
+        {'field': 'attack_name', 'display': 'User name'},
+        {'field': 'attack_time', 'display': 'Time'}
+    ],
+    paging: {
+      size: 10
+    },
+    default_operator: "AND",
+    default_freetext_fuzzify: "*",
+    result_display: [
+        [
+            {
+                "pre": "WARNING! Attack from ",
+                "field": "attack_ip"
+            },
+            {
+                "pre": " at ",
+                "field": "attack_time"
+            },
+            {
+                "pre": " by user ",
+                "field": "attack_name"
+            }
+        ]
+    ],
+  });
+  });
+});
+  </script>
+        <div class="facet-view-simple"></div>
+
+{% endblock %}

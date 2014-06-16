@@ -49,6 +49,16 @@ class SshEntry(DomainObject):
     def set_attack_ip(self, ip):
         self.data['attack_ip'] = ip
 
+    def set_attack_location(self, loc):
+        self.data['attack_location'] = loc
+
+    def set_attack_perp(self, perpetrator):
+        self.data['attack_perp'] = perpetrator
+
+    def save(self):
+        # todo: geiop for location
+        # todo: whois for name
+        super().save()
 
 # a typical record object, with no special abilities
 class Record(DomainObject):
