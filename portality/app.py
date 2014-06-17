@@ -25,9 +25,7 @@ from portality.view.data import blueprint as data
 from portality.view.explorer import blueprint as explorer
 from portality.view.pagemanager import blueprint as pagemanager
 
-app.register_blueprint(account, url_prefix='/account')
 app.register_blueprint(nav, url_prefix='/nav')
-app.register_blueprint(admin, url_prefix='/admin')
 app.register_blueprint(graph, url_prefix='/graph')
 app.register_blueprint(contact, url_prefix='/contact')
 app.register_blueprint(query, url_prefix='/query')
@@ -35,8 +33,11 @@ app.register_blueprint(package, url_prefix='/package')
 app.register_blueprint(forms, url_prefix='/forms')
 app.register_blueprint(data, url_prefix='/data')
 app.register_blueprint(explorer, url_prefix='/explorer')
-app.register_blueprint(pagemanager)
 
+@app.route('/index')
+@app.route('/')
+def index():
+    return render_template('index.html')
 
 @login_manager.user_loader
 def load_account_for_login_manager(userid):
