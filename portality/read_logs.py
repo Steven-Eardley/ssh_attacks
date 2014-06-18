@@ -3,7 +3,7 @@ __author__ = 'steve'
 
 import glob, re
 from portality.core import app
-from portality import models
+from portality.models import SshEntry
 from datetime import datetime
 
 # Regular Expressions to get the relevant lines. We only want sshd lines like this:
@@ -52,7 +52,12 @@ def read_logs():
             exit(0)
 
     global line_count
-    print("{0} log entries successfully imported from {1} files.".format(line_count, file_count))
+    if line_count == file_count == 0:
+        print("Nothing to import; is the path to log files correct?")
+        exit(1)
+    else:
+        print("{0} log entries successfully imported from {1} files.".format(line_count, file_count))
+        exit(0)
 
 #TODO: year isn't in logs so we set the current year, This may not always be true.
 def extract_model(log_entry):
@@ -73,7 +78,7 @@ def extract_model(log_entry):
     id_str = attack_event_no+'D'+attack_time.isoformat()
 
     # Put this in an ssh_entry DomainObject, and save to the index
-    attack_model = models.SshEntry(id=id_str)
+    attack_model = SshEntry(id=id_str)
     attack_model.set_attack_time(str(attack_time))
     attack_model.set_attack_name(attack_user)
     attack_model.set_attack_ip(attack_ip)

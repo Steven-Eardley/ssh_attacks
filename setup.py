@@ -13,6 +13,9 @@ setup(
         "WTForms==1.0.5",
         "Werkzeug==0.9.6",
         "requests==2.1.0",
+        "pygeoip==0.3.1",
+        "ipwhois==0.8.2",
+        "dnspython3==1.11.1"
         #"lxml"
     ],
     url = 'http://cottagelabs.com/',

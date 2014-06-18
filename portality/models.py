@@ -2,6 +2,7 @@
 from datetime import datetime
 from portality.core import app
 from portality.dao import DomainObject as DomainObject
+from portality import find_log_metadata
 from flask_login import current_user
 
 '''
@@ -56,14 +57,18 @@ class SshEntry(DomainObject):
         self.data['attack_perp'] = perpetrator
 
     def save(self):
-        # todo: geiop for location
-        # todo: whois for name
+        loc_data = find_log_metadata.lookup_location(self)
+        self.set_attack_location(loc_data)
+
+        perp_name = find_log_metadata.lookup_whois(self)
+        self.set_attack_perp(perp_name)
         super().save()
 
-# a typical record object, with no special abilities
-class Record(DomainObject):
-    __type__ = 'record'
+class NameAndShameEntry(DomainObject):
+    __type__ = 'name_shame_entry'
 
+    def set_perp_name(self, name):
+        self.data['perp_name'] = name
     
 # a special object that allows a search onto all index types - FAILS TO CREATE INSTANCES
 class Everything(DomainObject):
