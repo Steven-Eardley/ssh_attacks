@@ -1,10 +1,33 @@
 {% extends "base.html" %}
 
 {% block content %}
-
+  <hr>
   <div class="jumbotron">
-      <h2>SSH Attacks</h2>
+      <h1>SSH Attacks</h1>
       <h4>Track and visualise the ssh entry attempts on Linux servers.</h4>
   </div>
 
+<div class="container">
+      <div class="row">
+        <div class="col-md-4">
+          <h2>View Data</h2>
+          <p>See graphs and stats of the attacks incoming on {{ app.config['HOST_NAME'] }}.</p>
+          <iframe src="{{ url_for('data.index') }}#data" width="100%" height="100%" scrolling="no" align="center" style="border:1px solid black;"></iframe>
+            <hr>
+          <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+        </div>
+        <div class="col-md-4">
+          <h2>Explore</h2>
+          <p>Use a FacetView to query and filter all data from the index.</p>
+            <iframe src="{{ url_for('explorer.index') }}#facetview" width="100%" height=width scrolling="no" align="center" style="border:1px solid black;"></iframe>
+          <hr>
+            <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+       </div>
+        <div class="col-md-4">
+          <h2>Map</h2>
+          <p>Show geolocation information of the attacks on a map.</p>
+          <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+        </div>
+      </div>
+    </div> <!-- /container -->
 {% endblock %}
