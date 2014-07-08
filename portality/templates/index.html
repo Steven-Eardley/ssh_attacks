@@ -10,23 +10,61 @@
 <div class="container">
       <div class="row">
         <div class="col-md-4">
-          <h2>View Data</h2>
-          <p>See graphs and stats of the attacks incoming on {{ app.config['HOST_NAME'] }}.</p>
-          <iframe src="{{ url_for('data.index') }}#data" width="100%" height="100%" scrolling="no" align="center" style="border:1px solid black;"></iframe>
-            <hr>
-          <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+            <!-- I've fudged all of the CSS and javascript here, sorry. -->
+            <!--[if IE]>
+            <style>
+            .frame {
+                zoom: 0.3;
+            }
+            </style>
+            <![endif]-->
+            <style>
+            .frame {
+                width: 1200px;
+                height: 800px;
+                border: 2px solid black;
+                -moz-transform: scale(0.3);
+                -moz-transform-origin: 0 0;
+                -o-transform: scale(0.3);
+                -o-transform-origin: 0 0;
+                -webkit-transform: scale(0.3);
+                -webkit-transform-origin: 0 0;
+            }
+            </style>
+
+            <script type="text/javascript">
+            window.onload = function() {
+                var dFrame = document.getElementById("data_frame");
+                var eFrame = document.getElementById("explorer_frame");
+                var mFrame = document.getElementById("map_frame");
+
+                dFrame.contentWindow.document.onclick = function() {
+                    alert("data frame contents clicked");
+                };
+
+                eFrame.contentWindow.document.onclick = function() {
+                    alert("explorer frame contents clicked");
+                };
+
+                mFrame.contentWindow.document.onclick = function() {
+                    alert("map frame contents clicked");
+                };
+
+            };
+            </script>
+
+            <h2>View Data</h2>
+          <p>See graphs and stats of the attacks incoming on the configured server, {{ app.config['HOST_NAME'] }}.</p>
+          <iframe class="frame" id="data_frame" src="{{ url_for('data.index') }}#data" scrolling="no"></iframe>
         </div>
         <div class="col-md-4">
           <h2>Explore</h2>
-          <p>Use a FacetView to query and filter all data from the index.</p>
-            <iframe src="{{ url_for('explorer.index') }}#facetview" width="100%" height=width scrolling="no" align="center" style="border:1px solid black;"></iframe>
-          <hr>
-            <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+          <p>Use a FacetView to query and filter all data stored in the index.</p>
+            <iframe class="frame" id="explorer_frame" src="{{ url_for('explorer.index') }}#facetview" scrolling="no"></iframe>
        </div>
         <div class="col-md-4">
           <h2>Map</h2>
-          <p>Show geolocation information of the attacks on a map.</p>
-          <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+          <p>Show geolocation information of the attacks on an interactive map.</p>
         </div>
       </div>
     </div> <!-- /container -->

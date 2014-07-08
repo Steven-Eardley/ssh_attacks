@@ -75,13 +75,11 @@ def run_whois(ip):
     # Alternatively, use the method below to try to catch more
     # match_indicators = re.compile('|'.join(["person", "name"]), re.IGNORECASE)
     # name_lines = list(filter(lambda l: match_indicators.search(l), whois_lines))
-    print(ip)
-    print(name_lines)
+
     name = "unknown"
-    # Lines are 'label: info', so discard label and strip whitespace.
+    # Lines are 'label: info', so discard label and strip whitespace. Only take first.
     if len(name_lines) > 0:
         name = name_lines[0].rpartition(':')[2].lstrip()
-    print(name)
     return name
 
 

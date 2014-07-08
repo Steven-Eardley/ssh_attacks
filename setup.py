@@ -1,8 +1,8 @@
 from setuptools import setup, find_packages
 
 setup(
-    name = 'portality',
-    version = '0.9.0',
+    name = 'ssh_attacks',
+    version = '0.1',
     packages = find_packages(),
     install_requires = [
         "Flask==0.10.1",
@@ -12,16 +12,17 @@ setup(
         "Markdown==2.3.1",
         "WTForms==1.0.5",
         "Werkzeug==0.9.6",
-        "requests==2.1.0",
-        "pygeoip==0.3.1",
-        "ipwhois==0.8.2",
-        "dnspython3==1.11.1"
+        "requests",
+        "pygeoip",
+        "dnspython3",
+	"ipwhois"
+	#"nltk"
         #"lxml"
     ],
     url = 'http://cottagelabs.com/',
-    author = 'Cottage Labs',
-    author_email = 'us@cottagelabs.com',
-    description = 'A web API layer over an ES backend, with various useful views',
+    author = 'Steve Eardley',
+    author_email = 'steve@cottagelabs.com',
+    description = 'View and log failed ssh login / attack attempts on a Linux server',
     license = 'Copyheart',
     classifiers = [
         'Development Status :: 3 - Alpha',

@@ -10,9 +10,13 @@ from datetime import datetime
 # "Jun  6 20:54:18 Zeus sshd[9709]: Invalid user fitzgibbons from 220.177.198.87"
 match_attack = re.compile('sshd.*Invalid')
 match_event_no = re.compile('[\d*]')
+match_ipv6 = re.compile('(.+:)+')
 
 # Count the total number of log lines inserted in the index.
 line_count = 0
+success_count = 0
+
+hostname = None
 
 def get_hostname():
     """
@@ -20,12 +24,14 @@ def get_hostname():
     :return: The hostname, as a string.
     """
     try:
-        hostname = app.config['HOST_NAME']
+        h_name = app.config['HOST_NAME']
     except KeyError:
         h = open('/etc/hostname', 'r')
-        hostname = h.read()
+        h_name = h.read()
 
-    return hostname.strip()
+    global hostname
+    hostname = h_name.strip()
+    return h_name.strip()
 
 #TODO: handle archives (currently requires the logs to have been manually extracted).
 def read_logs():
@@ -51,12 +57,13 @@ def read_logs():
             print("No invalid user login attempts found. Aborting.")
             exit(0)
 
-    global line_count
+    global line_count, success_count
     if line_count == file_count == 0:
         print("Nothing to import; is the path to log files correct?")
         exit(1)
     else:
-        print("{0} log entries successfully imported from {1} files.".format(line_count, file_count))
+        print("{0} out of {1} log entries successfully imported from {2} files."\
+              .format(success_count, line_count, file_count))
         exit(0)
 
 #TODO: year isn't in logs so we set the current year, This may not always be true.
@@ -66,13 +73,26 @@ def extract_model(log_entry):
     :param log_entry: a single line of the log file
     """
     # Split on the machine's hostname to separate the time from the details
-    hostname = get_hostname()
-    [time, details] = log_entry.split(hostname)
+    global hostname
+    if not hostname:
+        host = get_hostname()
+    else:
+        host = hostname
+
+    [time, details] = log_entry.split(host)
     attack_time = datetime.strptime(time, '%b  %d %H:%M:%S ')
     attack_time = attack_time.replace(year=datetime.now().year)
     attack_event_no = ''.join(match_event_no.findall(details.split()[0]))
     attack_user = details.split()[3]
     attack_ip = details.split()[5]
+
+    # Increment our processed entry count
+    global line_count
+    line_count += 1
+
+    # Skip those matching ipv6 addresses, these may contain sensitive info from within the network
+    if match_ipv6.search(attack_ip):
+        return
 
     # Use the event number + time as the ID, so we avoid adding duplicates to the index
     id_str = attack_event_no+'D'+attack_time.isoformat()
@@ -84,9 +104,9 @@ def extract_model(log_entry):
     attack_model.set_attack_ip(attack_ip)
     attack_model.save()
 
-    # Increment our processed entry count
-    global line_count
-    line_count += 1
+    # Increment our successfully processed entry count
+    global success_count
+    success_count += 1
 
 if __name__ == "__main__":
     read_logs()
