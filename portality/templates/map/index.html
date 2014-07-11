@@ -1,46 +1,16 @@
-<!DOCTYPE html>
-<html dir="ltr" lang="en">
+{% extends "base.html" %}
 
-<head>
-    <meta charset="utf-8">
-    <title>{{ app.config['SERVICE_NAME'] }}</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+{% block content %}
 
-    <link href="{{ url_for('static', filename='images/favicon.ico') }}" rel="icon" type="image/x-icon" />
-
-    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
-    <!--[if lt IE 9]>
-    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-
-    <!-- this is where we can incorporate any css files -->
-    <link rel="stylesheet" href="{{url_for('static', filename='bootstrap-3.1.1/css/bootstrap.min.css')}}">
-
-    <!-- get the select2 css -->
-    <link rel="stylesheet" type="text/css" href="/static/portality/vendor/select2-release-3.2/select2.css">
-
-    <link rel="stylesheet" href="{{url_for('static', filename='opendoar.css')}}">
-
-</head>
-
-<body>
 
 <div id="map"></div>
-
-
-<a class="btn btn-info" href="/" id="back" alt="click here to go back to the rest of the OpenDOAR website" title="click here to go back to the rest of the OpenDOAR website"> &laquo; return to the OpenDOAR site</a>
-
 
 <div id="counter">
 loading
 </div>
 
-
-
-
 <div class="input-group" id="searches">
-    <input type="text" class="form-control" id="searchbox" placeholder="openDOAR - search here">
+    <input type="text" class="form-control" id="searchbox" placeholder="search SSH attacks">
     <div class="input-group-btn">
         <button class="btn btn-default" id="showoptions" alt="show/hide search options" title="show/hide search options"><i class="glyphicon glyphicon-cog"></i></button>
     </div>
@@ -108,22 +78,16 @@ loading
         </p>
 
         <hr></hr>-->
-
-        <p><a href="{{ url_for('root') }}" class="btn btn-info" alt="click here to go back to the rest of the OpenDOAR website" title="click here to go back to the rest of the OpenDOAR website">Return to the OpenDOAR site</a></p>
     </div>
 </div>
 
 
 
 <div class="panel panel-default" id="welcome" style="display:none;">
-    <div class="panel-heading" style="background-color:#53afdf;color:white;">
-        <button type="button" class="close" data-dismiss="panel" aria-hidden="true">&times;</button>
-        <h2 style="text-align:center;">Welcome to openDOAR</h2>
-    </div>
     <div class="panel-body">
         <p>Scroll or double-click to zoom, click-and-drag to pan</p>
-        <p>Click a country or organisation to focus on it</p>
-        <p>Use the text search box above to find organisations</p>
+        <p>Click a country to focus on it</p>
+        <p>Use the text search box above to find attackers</p>
         <p>Click the <span class="glyphicon glyphicon-cog"></span> settings icon at top right for options</p>
     </div>
 </div>
@@ -152,35 +116,20 @@ loading
     </div>
 </div>
 
-
-
-
-
-<div id="graphs">
-
-<p>graphs in here</p>
-
-</div>
-
-
-
 <!-- get jquery js -->
-<script type="text/javascript" src="{{url_for('static', filename='portality/vendor/jquery-1.7.1.min.js')}}"></script>
+<script type="text/javascript" src="/static/portality/vendor/facetview/vendor/jquery/1.7.1/jquery-1.7.1.min.js"></script>
 
 <!-- get bootstrap js -->
-<script type="text/javascript" src="{{url_for('static', filename='bootstrap-3.1.1/js/bootstrap.min.js')}}"></script>
+<script type="text/javascript" src="/static/portality/vendor/bootstrap-3.1.1/js/bootstrap.min.js"></script>
 
 <!-- get select2 -->
 <script type="text/javascript" src="/static/portality/vendor/select2-release-3.2/select2.min.js"></script>
 
 <!-- get d3 -->
-<script src="/static/map/d3.v3.min.js"></script>
+<script src="/static/portality/vendor/map/d3.v3.min.js"></script>
 
 <!-- get topojson -->
-<script src="/static/map/topojson.v1.min.js"></script>
-
-
-
+<script src="/static/portality/vendor/map/topojson.v1.min.js"></script>
 
 
 <script>
@@ -465,7 +414,7 @@ function setup(width,height){
 
 }
 
-d3.json("/static/map/world-topo-min.json", function(error, world) {
+d3.json("/static/portality/vendor/map/world-topo-min.json", function(error, world) {
 
   var countries = topojson.feature(world, world.objects.countries).features;
 
@@ -484,7 +433,7 @@ function draw(topo) {
       .attr("d", path)
       .attr("id", function(d,i) { return d.id; })
       .attr("title", function(d,i) { return d.properties.name; })
-      .style("fill", '#53afdf');
+      .style("fill", '#c0c0c0');
 
   //offsets for tooltips
   var offsetL = document.getElementById('map').offsetLeft+20;
@@ -647,5 +596,4 @@ function addpoint(lat,lon,text) {
 
 </script>
 
-</body>
-</html>
+{% endblock %}

@@ -23,6 +23,7 @@ from portality.view.package import blueprint as package
 from portality.view.forms import blueprint as forms
 from portality.view.data import blueprint as data
 from portality.view.explorer import blueprint as explorer
+from portality.view.map import blueprint as ip_map
 from portality.view.pagemanager import blueprint as pagemanager
 
 app.register_blueprint(nav, url_prefix='/nav')
@@ -33,6 +34,7 @@ app.register_blueprint(package, url_prefix='/package')
 app.register_blueprint(forms, url_prefix='/forms')
 app.register_blueprint(data, url_prefix='/data')
 app.register_blueprint(explorer, url_prefix='/explorer')
+app.register_blueprint(ip_map, url_prefix='/map')
 
 @app.route('/index')
 @app.route('/')

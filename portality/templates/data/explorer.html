@@ -12,6 +12,7 @@
               <li{% if request.path == '/' %} class="active"{% endif %}><a href="/">home</a></li>
               <li{% if request.path == '/data/' %} class="active"{% endif %}><a href="{{ url_for('data.index') }}">view data</a></li>
               <li{% if request.path == '/explorer/' %} class="active"{% endif %}><a href="{{ url_for('explorer.index') }}">explore data</a></li>
+              <li{% if request.path == '/map/' %} class="active"{% endif %}><a href="{{ url_for('map.index') }}">map</a></li>
             </ul>
           <ul class="nav pull-right">
             <li>
