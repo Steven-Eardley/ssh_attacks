@@ -3,97 +3,81 @@
 {% block content %}
 
 
-<div id="map"></div>
-
-<div id="counter">
-loading
-</div>
-
-<div class="input-group" id="searches">
-    <input type="text" class="form-control" id="searchbox" placeholder="search SSH attacks">
-    <div class="input-group-btn">
-        <button class="btn btn-default" id="showoptions" alt="show/hide search options" title="show/hide search options"><i class="glyphicon glyphicon-cog"></i></button>
-    </div>
-</div>
-
-
-
-<div id="selections">
-</div>
-
-
-<div id="suggestions">
-
-    <div id="suggest_repo">
-    </div>
-
-    <div class="extrasuggest" id="register_metadata_record_subject_term_exact">
-    </div>
-
-    <div class="extrasuggest" id="suggest_operational_content_type">
-        <div class="extrasuggest" id="register_operational_status_exact">
-        </div>
-        <div class="extrasuggest" id="register_metadata_record_content_type_exact" style="border-top:1px solid #ccc;margin-top:5px;">
-        </div>
-        <div class="extrasuggest" id="register_metadata_record_repository_type_exact" style="border-top:1px solid #ccc;margin-top:5px;">
+<div class="row" style="position: absolute; top 0; left 0; padding: 5px">
+    <div class="col-md-4">
+        <div id="counter" style="padding: 6px">
+            loading
         </div>
     </div>
 
-    <div class="extrasuggest" id="register_metadata_record_language_exact">
-    </div>
+    <div class="col-md-5">
+        <div class="input-group" id="searches">
+            <input type="text" class="form-control" id="searchbox" placeholder="search SSH attacks">
+            <div class="input-group-btn">
+            <button class="btn btn-default" id="showoptions" alt="show/hide search options" title="show/hide search options"><i class="glyphicon glyphicon-cog"></i></button>
+            </div>
+        </div>
 
-    <div class="extrasuggest" id="register_software_name_exact">
-    </div>
+        <div class="panel panel-default" id="welcome" style="display:none;">
+            <div class="panel-body">
+                <p>Scroll or double-click to zoom, click-and-drag to pan</p>
+                <p>Click a country to focus on it</p>
+                <p>Use the text search box above to find attackers</p>
+                <p>Click the <span class="glyphicon glyphicon-cog"></span> settings icon at top right for options</p>
+            </div>
+        </div>
 
-    <div class="extrasuggest" id="register_policy_policy_grade_exact">
-    </div>
+        <div id="selections">
+        </div>
 
+       <div class="panel panel-default" id="options" style="display:none;">
+            <div class="panel-heading" style="background-color:#090909;color:white;">
+                <button type="button" class="close" data-dismiss="panel" aria-hidden="true">&times;</button>
+                <h2 style="text-align:center;">Options</h2>
+            </div>
+            <div class="panel-body">
+                <p>
+                <input class="facetrequest" type="checkbox" name="register.operational_status.exact"> suggest operational status when text searching<br>
+                <input class="facetrequest" type="checkbox" name="register.policy.policy_grade.exact"> suggest policy grades when text searching<br>
+                <input class="facetrequest" type="checkbox" name="register.metadata.record.language.exact"> suggest repository languages  when text searching<br>
+                <input class="facetrequest" type="checkbox" name="register.metadata.record.content_type.exact"> suggest content types when text searching<br>
+                <input class="facetrequest" type="checkbox" name="register.metadata.record.repository_type.exact"> suggest repository types when text searching<br>
+                <input class="facetrequest" type="checkbox" name="register.metadata.record.subject.term.exact"> suggest repository subjects when text searching<br>
+                <input class="facetrequest" type="checkbox" name="register.software.name.exact"> suggest repository software when text searching
+                </p>
+            </div>
+       </div>
+       <div id="suggestions">
+
+            <div id="suggest_repo" style="border: 1px solid black; background-color:rgba(255,255,255,0.7);">
+            </div>
+
+            <div class="extrasuggest" id="register_metadata_record_subject_term_exact">
+            </div>
+
+            <div class="extrasuggest" id="suggest_operational_content_type">
+                <div class="extrasuggest" id="register_operational_status_exact">
+                </div>
+                <div class="extrasuggest" id="register_metadata_record_content_type_exact" style="border-top:1px solid #ccc;margin-top:5px;">
+                </div>
+                <div class="extrasuggest" id="register_metadata_record_repository_type_exact" style="border-top:1px solid #ccc;margin-top:5px;">
+                </div>
+            </div>
+
+            <div class="extrasuggest" id="register_metadata_record_language_exact">
+            </div>
+
+            <div class="extrasuggest" id="register_software_name_exact">
+            </div>
+
+            <div class="extrasuggest" id="register_policy_policy_grade_exact">
+            </div>
+
+        </div>
+    </div>
 </div>
 
-
-
-<div class="panel panel-default" id="options" style="display:none;">
-    <div class="panel-heading" style="background-color:#53afdf;color:white;">
-        <button type="button" class="close" data-dismiss="panel" aria-hidden="true">&times;</button>
-        <h2 style="text-align:center;">Options</h2>
-    </div>
-    <div class="panel-body">
-        <p>
-        <input class="facetrequest" type="checkbox" name="register.operational_status.exact"> suggest operational status when text searching<br>
-        <input class="facetrequest" type="checkbox" name="register.policy.policy_grade.exact"> suggest policy grades when text searching<br>
-        <input class="facetrequest" type="checkbox" name="register.metadata.record.language.exact"> suggest repository languages  when text searching<br>
-        <input class="facetrequest" type="checkbox" name="register.metadata.record.content_type.exact"> suggest content types when text searching<br>
-        <input class="facetrequest" type="checkbox" name="register.metadata.record.repository_type.exact"> suggest repository types when text searching<br>
-        <input class="facetrequest" type="checkbox" name="register.metadata.record.subject.term.exact"> suggest repository subjects when text searching<br>
-        <input class="facetrequest" type="checkbox" name="register.software.name.exact"> suggest repository software when text searching
-        </p>
-
-        <hr></hr>
-
-        <!--
-        <p>
-        <input type="checkbox" name="graphs"> show related graphs with the map<br>
-        <input type="radio" name="map" value="mercator" checked="checked"> meractor or
-        <input type="radio" name="map" value="ortho"> orthographic map
-        </p>
-
-        <hr></hr>-->
-    </div>
-</div>
-
-
-
-<div class="panel panel-default" id="welcome" style="display:none;">
-    <div class="panel-body">
-        <p>Scroll or double-click to zoom, click-and-drag to pan</p>
-        <p>Click a country to focus on it</p>
-        <p>Use the text search box above to find attackers</p>
-        <p>Click the <span class="glyphicon glyphicon-cog"></span> settings icon at top right for options</p>
-    </div>
-</div>
-
-
-
+<div id="map" style="border: 1px dashed black"></div>
 
 <div class="panel panel-default" id="orgpanel" style="display:none;">
     <div class="panel-heading" style="background-color:#53afdf;color:white;">
@@ -103,9 +87,6 @@ loading
     <div class="panel-body">
     </div>
 </div>
-
-
-
 
 <div class="panel panel-default" id="repopanel" style="display:none;">
     <div class="panel-heading" style="background-color:#53afdf;color:white;">
@@ -205,7 +186,7 @@ queryresponse = undefined;
 var first = true;
 var handleresults = function(data) {
     queryresponse = data;
-    $('#counter').html(data.hits.total);
+    $('#counter').html(data.hits.total + ' results');
     // remove old stuff
     $('.point').remove();
     $('.suggestion').remove();
@@ -433,7 +414,7 @@ function draw(topo) {
       .attr("d", path)
       .attr("id", function(d,i) { return d.id; })
       .attr("title", function(d,i) { return d.properties.name; })
-      .style("fill", '#c0c0c0');
+      .style("fill", '#b0b0b0');
 
   //offsets for tooltips
   var offsetL = document.getElementById('map').offsetLeft+20;

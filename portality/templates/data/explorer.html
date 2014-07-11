@@ -14,12 +14,13 @@
               <li{% if request.path == '/explorer/' %} class="active"{% endif %}><a href="{{ url_for('explorer.index') }}">explore data</a></li>
               <li{% if request.path == '/map/' %} class="active"{% endif %}><a href="{{ url_for('map.index') }}">map</a></li>
             </ul>
+          <!--
           <ul class="nav pull-right">
             <li>
               <form class="navbar-search" id="topsearch" name="topsearch" action="/search" method="GET">
                 <input class="search-query" type="text" name="q" placeholder="search" />
               </form>
-          </ul>
+          </ul> -->
         </div>
       </div>
     </div>
