@@ -2,6 +2,8 @@
 
 {% block content %}
 
+<!-- get map css -->
+<link rel="stylesheet" type="text/css" href="static/portality/vendor/map/map.css">
 
 <div class="row" style="position: absolute; top 0; left 0; padding: 5px">
     <div class="col-md-4">
@@ -256,7 +258,7 @@ var executequery = function() {
     });
     $.ajax({
         type: 'GET',
-        url: 'http://oarr.ooz.cottagelabs.com/query?source=' + JSON.stringify(query),
+        //url: 'http://oarr.ooz.cottagelabs.com/query?source=' + JSON.stringify(query),
         dataType: 'JSONP',
         success: handleresults
     });

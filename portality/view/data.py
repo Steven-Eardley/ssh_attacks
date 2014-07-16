@@ -1,4 +1,5 @@
 __author__ = 'steve'
+
 import json
 from flask import Blueprint, request, render_template, make_response
 from portality import models
@@ -23,8 +24,8 @@ def index():
     print(fdist)
 
     #str(attacks['hits']['hits'][0]['_source']['attack_name'])
-    return render_template('data/preview.html', data=str(attks))
-    #resp = make_response(json.dumps(attks))
+    return render_template('data/preview.html', data=fdist)
+    #resp = make_response(json.dumps(fdist))
 
     #resp.mimetype = "application/json"
     #return(resp)

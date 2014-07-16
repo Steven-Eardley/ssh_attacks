@@ -1,10 +1,61 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div>
-    <a id="data"></a>
-    {{ data }}
+<div id="chart">
+    <svg></svg>
 </div>
 
+<!-- get nvd3 -->
+<script src="/static/portality/vendor/nvd3/nv.d3.js"></script>
+
+<script type="text/javascript">
+    var myData= {{ data | tojson }};
+
+    var values = [];
+    for (var key in myData){
+    var value = myData[key];
+    var entry = { "label" : key, "value" : value };
+    values.push(entry);
+    }
+
+    var wrappedData = [{ key: "Attack Names", values : values }]
+
+    nv.addGraph(function() {
+    var chart = nv.models.discreteBarChart()
+      .x(function(d) { return d.label })    //Specify the data accessors.
+      .y(function(d) { return d.value })
+      //.staggerLabels(true)    //Too many bars and not enough room? Try staggering labels.
+      .tooltips(false)        //Don't show tooltips
+      .showValues(true)       //...instead, show the bar value right on top of each bar.
+      ;
+
+  d3.select('#chart svg')
+      .datum(wrappedData)
+      .transition().duration(350)
+      .call(chart);
+
+  nv.utils.windowResize(chart.update);
+
+  return chart;
+});
+
+/* A list of bar charts; key is the title, values oare a list of bar labels & heights
+[
+    {
+      key: "Chart Title",
+      values: [
+        {
+          "label" : "A Label" ,
+          "value" : -29.765957771107
+        } ,
+        {
+          "label" : "B Label" ,
+          "value" : 0
+        }
+      ]
+    }
+  ]
+  */
+</script>
 
 {% endblock %}
