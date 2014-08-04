@@ -2,8 +2,14 @@
 
 {% block content %}
 <div id="chart">
-    <svg></svg>
+    <svg width="700" height="400"></svg>
 </div>
+
+<div>
+    <p>The chart above shows the attackers' favourite user names when attempting to log into the server.</p>
+</div>
+
+{{ data }}
 
 <!-- get nvd3 -->
 <script src="/static/portality/vendor/nvd3/nv.d3.js"></script>
@@ -11,20 +17,13 @@
 <script type="text/javascript">
     var myData= {{ data | tojson }};
 
-    var values = [];
-    for (var key in myData){
-    var value = myData[key];
-    var entry = { "label" : key, "value" : value };
-    values.push(entry);
-    }
-
-    var wrappedData = [{ key: "Attack Names", values : values }]
+    var wrappedData = [{ key: "Attack Names", values : myData }]
 
     nv.addGraph(function() {
     var chart = nv.models.discreteBarChart()
-      .x(function(d) { return d.label })    //Specify the data accessors.
-      .y(function(d) { return d.value })
-      //.staggerLabels(true)    //Too many bars and not enough room? Try staggering labels.
+      .x(function(d) { return d.key })    //Specify the data accessors.
+      .y(function(d) { return d.doc_count })
+      .staggerLabels(true)    //Too many bars and not enough room? Try staggering labels.
       .tooltips(false)        //Don't show tooltips
       .showValues(true)       //...instead, show the bar value right on top of each bar.
       ;

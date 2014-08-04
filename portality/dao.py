@@ -145,12 +145,15 @@ class DomainObject(UserDict):
         if recid and not recid.endswith('/'): recid += '/'
         if isinstance(q,dict):
             query = q
-            if 'bool' not in query['query']:
-                boolean = {'bool':{'must': [] }}
-                boolean['bool']['must'].append( query['query'] )
-                query['query'] = boolean
-            if 'must' not in query['query']['bool']:
-                query['query']['bool']['must'] = []
+            try:
+                if 'bool' not in query['query']:
+                    boolean = {'bool':{'must': [] }}
+                    boolean['bool']['must'].append( query['query'] )
+                    query['query'] = boolean
+                if 'must' not in query['query']['bool']:
+                    query['query']['bool']['must'] = []
+            except KeyError:
+                pass
         elif q:
             query = {
                 'query': {

@@ -68,19 +68,21 @@ def query(path='Pages'):
 
         if current_user.is_anonymous() and app.config.get('ANONYMOUS_SEARCH_TERMS',False):
             if path.lower() in app.config['ANONYMOUS_SEARCH_TERMS'].keys():
-                if 'bool' not in qs['query']:
-                    pq = qs['query']
-                    qs['query'] = {
-                        'bool':{
-                            'must': [
-                                pq
-                            ]
+                try:
+                    if 'bool' not in qs['query']:
+                        pq = qs['query']
+                        qs['query'] = {
+                            'bool':{
+                                'must': [
+                                    pq
+                                ]
+                            }
                         }
-                    }
-                if 'must' not in qs['query']['bool']:
-                    qs['query']['bool']['must'] = []
-                qs['query']['bool']['must'] = qs['query']['bool']['must'] + app.config['ANONYMOUS_SEARCH_TERMS'][path.lower()]
-
+                    if 'must' not in qs['query']['bool']:
+                        qs['query']['bool']['must'] = []
+                    qs['query']['bool']['must'] = qs['query']['bool']['must'] + app.config['ANONYMOUS_SEARCH_TERMS'][path.lower()]
+                except KeyError:
+                    pass
         resp = make_response( json.dumps(klass().query(q=qs)) )
 
     resp.mimetype = "application/json"
