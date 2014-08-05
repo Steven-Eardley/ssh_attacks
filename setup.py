@@ -15,9 +15,7 @@ setup(
         "requests",
         "pygeoip",
         "dnspython3",
-	"ipwhois"
-	#"nltk"
-        #"lxml"
+	    "ipwhois"
     ],
     url = 'http://cottagelabs.com/',
     author = 'Steve Eardley',

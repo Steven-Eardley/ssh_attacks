@@ -10,22 +10,36 @@ blueprint = Blueprint('data', __name__)
 
 @blueprint.route('/')
 def index():
-    count_names_query =\
+    data_aggs =\
     {
-    "size" : 0,
-    "aggregations" :
+        "size" : 0,
+        "aggregations" :
         {
         "name_count" :
-             {
-             "terms" :
+            {
+                "terms" :
                 {
-                "field" : "attack_name"
+                    "field" : "attack_name"
+                }
+            },
+        "ip_count" :
+            {
+                "terms" :
+                {
+                    "field" : "attack_ip"
                 }
             }
-       }
+        }
     }
 
-    names = models.SshEntry.query(q=count_names_query)
-    count_results = (names['aggregations']['name_count']['buckets'])
-    print(count_results)
-    return render_template('data/preview.html', data=count_results)
+    agg_results = models.SshEntry.query(q=data_aggs)
+
+    # Collect the data lists from the aggregations
+    name_results = agg_results['aggregations']['name_count']['buckets']
+    ip_results = agg_results['aggregations']['ip_count']['buckets']
+
+    # Pick out some top results to insert into text.
+    top_name = agg_results['aggregations']['name_count']['buckets'][0]['key']
+    top_name_freq = agg_results['aggregations']['name_count']['buckets'][0]['doc_count']
+
+    return render_template('data/preview.html',top_name=top_name, top_name_freq=top_name_freq, data_name=name_results, data_ip=ip_results)

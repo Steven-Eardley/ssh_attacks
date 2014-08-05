@@ -1,23 +1,42 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div id="chart">
-    <svg width="700" height="400"></svg>
+<div id="name_chart">
+    <svg width="800" height="400"></svg>
 </div>
 
 <div>
-    <p>The chart above shows the attackers' favourite user names when attempting to log into the server.</p>
+    <p>The chart above shows the attackers' favourite user names when attempting to log into the server. The most frequently used
+       was <b>{{ top_name }}</b>, with <b>{{ top_name_freq }}</b> attempts with this user name. This represents all attacks since records began.</p>
 </div>
 
-{{ data }}
+<div id="ip_chart">
+    <svg width="1100" height="400"></svg>
+</div>
+
+<div>
+    <p>Repeat offenders appear here: the count of which IPs produced the most break-in attempts. View the <a href="{{ url_for('map.index') }}">map</a>
+    for information about where these attacks originated from. </p>
+</div>
+
+
+<!-- {{ data_ip }} -->
 
 <!-- get nvd3 -->
 <script src="/static/portality/vendor/nvd3/nv.d3.js"></script>
 
-<script type="text/javascript">
-    var myData= {{ data | tojson }};
+<!-- get gradient -->
+<script src="/static/portality/vendor/gradient/gradient.js"></script>
 
-    var wrappedData = [{ key: "Attack Names", values : myData }]
+<script type="text/javascript">
+    var colourList = ["#444444", "#525252", "#616161", "#707070", "#7E7E7E",
+                      "#8D8D8D", "#9C9C9C", "#AAAAAA", "#B9B9B9", "#C8C8C8"]
+
+    var nameData= {{ data_name | tojson }};
+    var ipData = {{ data_ip | tojson }}
+
+    var wrappedNameData = [{ key: "Attack Names", values : nameData }]
+    var wrappedIpData = [{ key: "Attack IPs", values : ipData }]
 
     nv.addGraph(function() {
     var chart = nv.models.discreteBarChart()
@@ -26,10 +45,16 @@
       .staggerLabels(true)    //Too many bars and not enough room? Try staggering labels.
       .tooltips(false)        //Don't show tooltips
       .showValues(true)       //...instead, show the bar value right on top of each bar.
+      .color(colourList)
       ;
 
-  d3.select('#chart svg')
-      .datum(wrappedData)
+  d3.select('#name_chart svg')
+      .datum(wrappedNameData)
+      .transition().duration(350)
+      .call(chart);
+
+    d3.select('#ip_chart svg')
+      .datum(wrappedIpData)
       .transition().duration(350)
       .call(chart);
 
@@ -37,8 +62,12 @@
 
   return chart;
 });
+</script>
 
-/* A list of bar charts; key is the title, values oare a list of bar labels & heights
+<!--
+The datastructure used in our d3 graphs
+
+A list of bar charts; key is the title, values oare a list of bar labels & heights
 [
     {
       key: "Chart Title",
@@ -53,8 +82,7 @@
         }
       ]
     }
-  ]
-  */
-</script>
+]
+-->
 
 {% endblock %}
