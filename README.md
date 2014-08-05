@@ -11,4 +11,4 @@ Either run the `install.sh` script in the project root folder, or perform the fo
 Extract it, and place it in a folder named `data` within `src`.
 * Make a copy of `portality/settings.py` called `app.cfg` in the `src` directory. here you can customise the app settings.
 
-The install script for SSH Attacks retrieves GeoLite data created by MaxMind, available from [http://www.maxmind.com](http://www.maxmind.com).
+SSH Attacks uses GeoLite data created by MaxMind, available from [http://www.maxmind.com](http://www.maxmind.com).
