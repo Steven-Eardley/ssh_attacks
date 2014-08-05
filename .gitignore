@@ -46,8 +46,10 @@ docs/_build/
 .*.swp
 src*
 
-#app.cfg
+app.cfg
 
 media/*
 portality/default_templates/pagemanager/content/*
+
 .idea/
+data/*
