@@ -1,7 +1,7 @@
 __author__ = 'steve'
 """ Read all matching log files in specified folder, extracting the contents into a usable model, """
 
-import glob, re
+import glob, re, gzip
 from portality.core import app
 from portality.models import SshEntry
 from datetime import datetime
@@ -42,20 +42,21 @@ def read_logs():
     file_count = 0
 
     # If the user has configured a path, use that. Else use standard system directory
-    try:
-        path = app.config['AUTH_LOGS']
-    except KeyError:
-        path = '/var/log'
+    path = app.config.get('AUTH_LOGS', '/var/log')
 
     # Read all auth.log files in the provided path
     for log in glob.glob(path + '/auth*'):
-        f = open(log, 'r')
+        if log.endswith(".gz"):
+            f = gzip.open(log, 'rt')
+        else:
+            f = open(log, 'r')
         try:
             [extract_model(line.strip()) for line in f.readlines() if match_attack.search(line)]
             file_count += 1
         except UnicodeDecodeError:
             print("No invalid user login attempts found. Aborting.")
             exit(0)
+        f.close()
 
     global line_count, success_count
     if line_count == file_count == 0:

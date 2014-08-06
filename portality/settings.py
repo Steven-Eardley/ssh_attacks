@@ -21,9 +21,10 @@ PORT = 22236
 DATA_DIRECTORY = '../data'
 data_path = path.abspath(DATA_DIRECTORY)
 
-# Specify full path to the directory and hostname for auth.log files. Comment out to use current system's.
-AUTH_LOGS = "/home/backup/logs"
-HOST_NAME = "hostname"
+# Specify full path to the directory and hostname for auth.log files. Comment out to use /var/log/,
+# the defaut location for linux machines. Setting these allows reading logs from a different computer.
+#AUTH_LOGS = "/home/backup/logs"
+#HOST_NAME = "hostname"
 
 # Path to GeoIP database. Can be hard coded or use the default joined path.
 # GEOIP_PATH = '/path/to/GeoLiteCity.dat'
