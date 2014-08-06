@@ -1,3 +1,5 @@
+from os import path
+
 # ========================
 # MAIN SETTINGS
 
@@ -5,19 +7,31 @@
 SECRET_KEY = "default-key"
 
 # contact info
-ADMIN_NAME = "Cottage Labs"
+ADMIN_NAME = "Steve Eardley"
 ADMIN_EMAIL = ""
 
 # service info
-SERVICE_NAME = "Portality"
+SERVICE_NAME = "ssh attacks"
 SERVICE_TAGLINE = ""
 HOST = "0.0.0.0"
 DEBUG = True
-PORT = 5004
+PORT = 22236
+
+# Path to the data folder (relative to portality/app.py)
+DATA_DIRECTORY = '../data'
+data_path = path.abspath(DATA_DIRECTORY)
+
+# Specify full path to the directory and hostname for auth.log files. Comment out to use current system's.
+AUTH_LOGS = "/home/backup/logs"
+HOST_NAME = "hostname"
+
+# Path to GeoIP database. Can be hard coded or use the default joined path.
+# GEOIP_PATH = '/path/to/GeoLiteCity.dat'
+GEOIP_PATH = path.join(data_path, 'GeoLiteCity.dat')
 
 # elasticsearch settings
 ELASTIC_SEARCH_HOST = "http://127.0.0.1:9200" # remember the http:// or https://
-ELASTIC_SEARCH_DB = "portality"
+ELASTIC_SEARCH_DB = "ssh_attacks"
 INITIALISE_INDEX = True # whether or not to try creating the index and required index types on startup
 
 # list of superuser account names
@@ -27,7 +41,7 @@ SUPER_USER = ["test"]
 PUBLIC_REGISTER = False
 
 # can anonymous users get raw JSON records via the query endpoint?
-PUBLIC_ACCESSIBLE_JSON = True 
+PUBLIC_ACCESSIBLE_JSON = True
 
 
 # ========================
