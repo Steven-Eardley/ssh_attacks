@@ -74,6 +74,7 @@ MAPPINGS = {
 }
 MAPPINGS['account'] = {'account':MAPPINGS['record']['record']}
 MAPPINGS['pages'] = {'pages':MAPPINGS['record']['record']}
+MAPPINGS['ssh_entry'] = {'ssh_entry':MAPPINGS['record']['record']}
 
 
 # ========================
@@ -94,7 +95,7 @@ ANONYMOUS_SEARCH_TERMS = {
 # for each index type that you wish to have one
 # for example {'created_date' + FACET_FIELD : {"order":"desc"}}
 DEFAULT_SORT = {
-    "pages": {'created_date' + FACET_FIELD : {"order":"desc"}}
+    "ssh_entry": {'created_date' + FACET_FIELD : {"order":"desc"}}
 }
 
 

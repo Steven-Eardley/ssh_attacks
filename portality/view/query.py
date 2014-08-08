@@ -7,6 +7,7 @@ import json
 
 from flask import Blueprint, request, abort, make_response
 from flask_login import current_user
+from urllib.parse import unquote
 
 import portality.models as models
 from portality.core import app
@@ -54,7 +55,7 @@ def query(path='Pages'):
         elif 'q' in request.values:
             qs = {'query': {'query_string': { 'query': request.values['q'] }}}
         elif 'source' in request.values:
-            qs = json.loads(urllib2.unquote(request.values['source']))
+            qs = json.loads(unquote(request.values['source']))
         else: 
             qs = {'query': {'match_all': {}}}
 
@@ -66,7 +67,7 @@ def query(path='Pages'):
             if path.lower() in app.config['DEFAULT_SORT'].keys():
                 qs['sort'] = app.config['DEFAULT_SORT'][path.lower()]
 
-        if current_user.is_anonymous() and app.config.get('ANONYMOUS_SEARCH_TERMS',False):
+        """if current_user.is_anonymous() and app.config.get('ANONYMOUS_SEARCH_TERMS',False):
             if path.lower() in app.config['ANONYMOUS_SEARCH_TERMS'].keys():
                 try:
                     if 'bool' not in qs['query']:
@@ -82,8 +83,9 @@ def query(path='Pages'):
                         qs['query']['bool']['must'] = []
                     qs['query']['bool']['must'] = qs['query']['bool']['must'] + app.config['ANONYMOUS_SEARCH_TERMS'][path.lower()]
                 except KeyError:
-                    pass
+                    pass"""
         resp = make_response( json.dumps(klass().query(q=qs)) )
+        print(qs)
 
     resp.mimetype = "application/json"
     return resp
