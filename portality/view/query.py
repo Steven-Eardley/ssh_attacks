@@ -26,11 +26,6 @@ def query(path='ssh_entry'):
     subpath = pathparts[0]
     if subpath.lower() in app.config.get('NO_QUERY',[]):
         abort(401)
-    """
-    try:
-        klass = getattr(models, subpath[0].capitalize() + subpath[1:] )
-    except:
-        abort(404)"""
 
     klass = getattr(models, 'SshEntry')
     
@@ -69,7 +64,7 @@ def query(path='ssh_entry'):
             if path.lower() in app.config['DEFAULT_SORT'].keys():
                 qs['sort'] = app.config['DEFAULT_SORT'][path.lower()]
 
-        """if current_user.is_anonymous() and app.config.get('ANONYMOUS_SEARCH_TERMS',False):
+        if current_user.is_anonymous() and app.config.get('ANONYMOUS_SEARCH_TERMS',False):
             if path.lower() in app.config['ANONYMOUS_SEARCH_TERMS'].keys():
                 try:
                     if 'bool' not in qs['query']:
@@ -85,9 +80,8 @@ def query(path='ssh_entry'):
                         qs['query']['bool']['must'] = []
                     qs['query']['bool']['must'] = qs['query']['bool']['must'] + app.config['ANONYMOUS_SEARCH_TERMS'][path.lower()]
                 except KeyError:
-                    pass"""
+                    pass
         resp = make_response( json.dumps(klass().query(q=qs)) )
-        print(qs)
 
     resp.mimetype = "application/json"
     return resp
