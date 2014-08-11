@@ -21,16 +21,18 @@ blueprint = Blueprint('query', __name__)
 @blueprint.route('/<path:path>', methods=['GET','POST'])
 @blueprint.route('/', methods=['GET','POST'])
 @util.jsonp
-def query(path='Pages'):
+def query(path='ssh_entry'):
     pathparts = path.strip('/').split('/')
     subpath = pathparts[0]
     if subpath.lower() in app.config.get('NO_QUERY',[]):
         abort(401)
-
+    """
     try:
         klass = getattr(models, subpath[0].capitalize() + subpath[1:] )
     except:
-        abort(404)
+        abort(404)"""
+
+    klass = getattr(models, 'SshEntry')
     
     if len(pathparts) > 1 and pathparts[1] == '_mapping':
         resp = make_response( json.dumps(klass().query(endpoint='_mapping')) )

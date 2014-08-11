@@ -73,7 +73,6 @@ MAPPINGS = {
     }
 }
 MAPPINGS['account'] = {'account':MAPPINGS['record']['record']}
-MAPPINGS['pages'] = {'pages':MAPPINGS['record']['record']}
 MAPPINGS['ssh_entry'] = {'ssh_entry':MAPPINGS['record']['record']}
 
 
