@@ -7,6 +7,7 @@ import json
 
 from flask import Blueprint, request, abort, make_response
 from flask_login import current_user
+from urllib.parse import unquote
 
 import portality.models as models
 from portality.core import app
@@ -20,16 +21,18 @@ blueprint = Blueprint('query', __name__)
 @blueprint.route('/<path:path>', methods=['GET','POST'])
 @blueprint.route('/', methods=['GET','POST'])
 @util.jsonp
-def query(path='Pages'):
+def query(path='ssh_entry'):
     pathparts = path.strip('/').split('/')
     subpath = pathparts[0]
     if subpath.lower() in app.config.get('NO_QUERY',[]):
         abort(401)
-
+    """
     try:
         klass = getattr(models, subpath[0].capitalize() + subpath[1:] )
     except:
-        abort(404)
+        abort(404)"""
+
+    klass = getattr(models, 'SshEntry')
     
     if len(pathparts) > 1 and pathparts[1] == '_mapping':
         resp = make_response( json.dumps(klass().query(endpoint='_mapping')) )
@@ -54,7 +57,7 @@ def query(path='Pages'):
         elif 'q' in request.values:
             qs = {'query': {'query_string': { 'query': request.values['q'] }}}
         elif 'source' in request.values:
-            qs = json.loads(urllib2.unquote(request.values['source']))
+            qs = json.loads(unquote(request.values['source']))
         else: 
             qs = {'query': {'match_all': {}}}
 
@@ -66,7 +69,7 @@ def query(path='Pages'):
             if path.lower() in app.config['DEFAULT_SORT'].keys():
                 qs['sort'] = app.config['DEFAULT_SORT'][path.lower()]
 
-        if current_user.is_anonymous() and app.config.get('ANONYMOUS_SEARCH_TERMS',False):
+        """if current_user.is_anonymous() and app.config.get('ANONYMOUS_SEARCH_TERMS',False):
             if path.lower() in app.config['ANONYMOUS_SEARCH_TERMS'].keys():
                 try:
                     if 'bool' not in qs['query']:
@@ -82,8 +85,9 @@ def query(path='Pages'):
                         qs['query']['bool']['must'] = []
                     qs['query']['bool']['must'] = qs['query']['bool']['must'] + app.config['ANONYMOUS_SEARCH_TERMS'][path.lower()]
                 except KeyError:
-                    pass
+                    pass"""
         resp = make_response( json.dumps(klass().query(q=qs)) )
+        print(qs)
 
     resp.mimetype = "application/json"
     return resp
