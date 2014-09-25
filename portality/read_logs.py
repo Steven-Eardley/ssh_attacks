@@ -110,4 +110,6 @@ def extract_model(log_entry):
     success_count += 1
 
 if __name__ == "__main__":
+    path = app.config.get('AUTH_LOGS', '/var/log')
+    print("Reading log files in {0}\nThis may take a while...".format(path))
     read_logs()
