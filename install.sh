@@ -1,20 +1,20 @@
-#!/bin/sh
+#!/bin/bash
 
 # Activate the virtualenv
 
-env = 0
-echo -n "Install script for SSH Attacks.\n
+env=0
+echo -n "Install script for SSH Attacks.
 Has the virtualenv been activated? (Y/n): "
 
 read response
 
-if ($response == "n") || ($response == "N")
+if [ $response == "n" ] || [ $response == "N" ];
 then
     echo "Activating virtualenv now"
     source ../bin/activate
-    $env =1
+    $env=1
 else
-    echo "OK, I'll trust you. continuing the installation"
+    echo "OK, I'll trust you. Continuing the installation"
 fi
 
 echo "Installing Python dependencies"
@@ -34,7 +34,9 @@ mkdir data && cd data
 wget http://geolite.maxmind.com/download/geoip/database/GeoLiteCity.dat.gz
 gunzip GeoLiteCity.dat.gz
 
-if ($env == 1)
+# If we activated the virtualenv, deactivate it.
+if [ $env == 1 ];
+then
     deactivate
 fi
 

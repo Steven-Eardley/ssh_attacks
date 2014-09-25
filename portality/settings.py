@@ -7,7 +7,7 @@ from os import path
 SECRET_KEY = "default-key"
 
 # contact info
-ADMIN_NAME = "Steve Eardley"
+ADMIN_NAME = ""
 ADMIN_EMAIL = ""
 
 # service info
@@ -22,7 +22,7 @@ DATA_DIRECTORY = '../data'
 data_path = path.abspath(DATA_DIRECTORY)
 
 # Specify full path to the directory and hostname for auth.log files. Comment out to use /var/log/,
-# the defaut location for linux machines. Setting these allows reading logs from a different computer.
+# the default location for linux machines. Setting these allows reading logs from a different computer.
 #AUTH_LOGS = "/home/backup/logs"
 #HOST_NAME = "hostname"
 
@@ -96,14 +96,6 @@ ANONYMOUS_SEARCH_TERMS = {
 DEFAULT_SORT = {
     "ssh_entry": {'created_date' + FACET_FIELD : {"order":"desc"}}
 }
-
-
-# ========================
-# MEDIA SETTINGS
-
-# location of media storage folder
-MEDIA_FOLDER = "media"
-
 
 # ========================
 # PAGEMANAGER SETTINGS
